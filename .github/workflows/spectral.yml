@@ -1,0 +1,14 @@
+name: Spectral Scan
+on: [push, pull_request]
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required for developer/git-blame attribution
+      - name: CloudGuard Code Security Scan
+        uses: checkpointsw/spectral-github-action@v4
+        with:
+          spectral-dsn: ${{ secrets.SPECTRAL_DSN }}
+          spectral-args: "scan --ok"
